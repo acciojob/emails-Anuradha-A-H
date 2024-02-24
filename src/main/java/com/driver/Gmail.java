@@ -30,6 +30,8 @@ public class Gmail extends Email {
         {
 
             String msg = findOldestMessage();
+            Mail m = index.get(msg);
+            trash.put(msg,m);
             deleteMail(msg);
         }
         index.put(message,new Mail(date,sender,message));
