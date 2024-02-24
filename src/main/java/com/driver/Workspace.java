@@ -5,6 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Workspace extends Gmail{
 
@@ -28,14 +29,37 @@ public class Workspace extends Gmail{
         // 1. At a particular time, you can be present in at most one meeting
         // 2. If you want to attend a meeting, you must join it at its start time and leave at end time.
         // Example: If a meeting ends at 10:00 am, you cannot attend another meeting starting at 10:00 am
-        int count = 0;
-        LocalTime currentTime = LocalTime.MIN;
-        for(Meeting meeting : calendar)
-        {
-            if(meeting.getStartTime().compareTo(currentTime)>=0)
-            {
+//        int count = 0;
+//        LocalTime currentTime = LocalTime.MIN;
+//        for(Meeting meeting : calendar)
+//        {
+//            if(meeting.getStartTime().compareTo(currentTime)>=0)
+//            {
+//                count++;
+//                currentTime=meeting.getEndTime();
+//            }
+//        }
+//        return count;
+
+
+        if (calendar == null || calendar.isEmpty()) {
+            return 0;
+        }
+
+        // Sort meetings based on end times
+        calendar.sort(Comparator.comparing(Meeting::getEndTime));
+
+        int count = 1; // Initialize count with the first meeting
+        LocalTime currentEndTime = calendar.get(0).getEndTime();
+
+        // Iterate through meetings starting from the second one
+        for (int i = 1; i < calendar.size(); i++) {
+            Meeting currentMeeting = calendar.get(i);
+            if (currentMeeting.getStartTime().compareTo(currentEndTime) >= 0) {
+                // If the current meeting starts after or at the current end time,
+                // attend the meeting and update the current end time
                 count++;
-                currentTime=meeting.getEndTime();
+                currentEndTime = currentMeeting.getEndTime();
             }
         }
         return count;
