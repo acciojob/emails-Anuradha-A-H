@@ -26,13 +26,13 @@ public class Gmail extends Email {
         // It is guaranteed that:
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
-        if(index.size()<inboxCapacity)
+        if(index.size()>=inboxCapacity)
         {
-            index.put(message,new Mail(date,sender,message));
-        }else{
-            String msg = findLatestMessage();
+
+            String msg = findOldestMessage();
             deleteMail(msg);
         }
+        index.put(message,new Mail(date,sender,message));
     }
 
     public void deleteMail(String message){
@@ -52,9 +52,12 @@ public class Gmail extends Email {
         String st = "";
         for(String s : index.keySet())
         {
+
             st = s;
+
         }
         return st;
+
 
     }
 
@@ -62,14 +65,15 @@ public class Gmail extends Email {
         // If the inbox is empty, return null
         // Else, return the message of the oldest mail present in the inbox
         String s = "";
-        Date d = new Date();
+//        Date d = new Date();
         for(String st : index.keySet())
         {
-            Mail mail = index.get(st);
-            if(mail.date.compareTo(d) <= 0)
-            {
-                s = st;
-            }
+//            Mail mail = index.get(st);
+//            if(mail.date.compareTo(d) <= 0)
+//            {
+//                s = st;
+//            }
+            return st;
         }
         return s;
 
