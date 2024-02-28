@@ -13,15 +13,12 @@ public class Workspace extends Gmail{
 
     public Workspace(String emailId) {
         // The inboxCapacity is equal to the maximum value an integer can store.
-        super(emailId,Integer.MAX_VALUE);
+        super(emailId, Integer.MAX_VALUE);
         calendar = new ArrayList<>();
-
     }
 
     public void addMeeting(Meeting meeting){
-        //add the meeting to calendar
         calendar.add(meeting);
-
     }
 
     public int findMaxMeetings(){
@@ -63,7 +60,6 @@ public class Workspace extends Gmail{
 
         return m.size();
     }
-
     class mycomparator implements Comparator<Meeting> {
         @Override public int compare(Meeting m1, Meeting m2)
         {
@@ -82,4 +78,5 @@ public class Workspace extends Gmail{
             return 0;
         }
     }
+
 }
